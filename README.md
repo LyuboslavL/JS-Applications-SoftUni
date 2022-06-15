@@ -3,6 +3,7 @@ This is a students course with all the tasks and homework assigned to it.
 In this course the following topics are discussed:
 - HTTP request;
 - Creating simple Single Page Application;
+- AJAX;
 - Templating && Routing;
 - Working with NoSQL database and BaaS;
 - Rest API;
