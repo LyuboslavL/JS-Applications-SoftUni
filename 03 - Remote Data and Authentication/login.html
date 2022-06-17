@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        label {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h2>Register</h2>
+    <form id="registerForm" method="POST" action="http://localhost:3030/users/register">
+        <label>Email: <input type="text" name="email"></label>
+        <label>Password: <input type="password" name="password"></label>
+        <label>Repeat Password: <input type="password" name="repassword"></label>
+        <input type="submit" value="Register">
+    </form>
+
+    <h2>Login</h2>
+    <form id="loginForm" method="POST" action="http://localhost:3030/users/login">
+        <label>Email: <input type="text" name="email"></label>
+        <label>Password: <input type="password" name="password"></label>
+        <input type="submit" value="Login">
+    </form>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(e.target);
+
+            const email = formData.get('email');
+            const password = formData.get('password');
+            const repass = formData.get('repassword');
+
+            if (email === '' || password === '') {
+                return alert('All fields are required!');
+            } else if (password !== repass) {
+                return alert(`Passwords don't match!`);
+            }
+
+            register(email, password);
+        })
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(e.target);
+
+            const email = formData.get('email');
+            const password = formData.get('password');
+
+            login(email, password);
+        })
+
+        async function register(email, password) {
+            const response = await fetch('http://localhost:3030/users/register', {
+                method: "POST",
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({email, password}),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                sessionStorage.setItem('authToken', data.accessToken)
+            } else {
+                const error = await response.json();
+                alert(error.message);
+            }
+        };
+
+        async function login(email, password) {
+            const response = await fetch('http://localhost:3030/users/login', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'}, 
+                body: JSON.stringify({email, password}),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                sessionStorage.setItem('authToken', data.accessToken);
+            } else {
+                const error = await response.json();
+                alert(error.message);
+            }
+
+        }
+
+        async function getData() {
+            const options = {
+                method: "GET",
+                headers: {},
+            };
+
+            const token = sessionStorage.getItem('authToken');
+            if (token !== null) {
+                options.headers['X-Authorization'] = token;
+            };
+
+            const response = await fetch('http://localhost:3030/data/records', options);
+            return await response.json();
+        }
+    </script>
+
+</body>
+
+</html>
