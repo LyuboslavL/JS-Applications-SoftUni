@@ -50,13 +50,17 @@ function createRecipeCard(recipe) {
 
 let main;
 let section;
+let setActiveNav;
 
-export function setupCatalogue(mainTarget, sectionTarget) {
+export function setupCatalogue(mainTarget, sectionTarget, setActiveNavCb) {
     main = mainTarget;
     section = sectionTarget;
+    setActiveNav = setActiveNavCb;
 }
 
 export async function showCatalogue() {
+    setActiveNav('catalogueLink');
+
     section.innerHTML = '<p style="color: white">Loading...</p>';
     main.innerHTML = '';
     main.appendChild(section);

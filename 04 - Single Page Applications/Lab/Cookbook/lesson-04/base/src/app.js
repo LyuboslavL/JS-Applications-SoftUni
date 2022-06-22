@@ -22,10 +22,10 @@ function main() {
         'createLink': showCreate
     }
 
-    setupCatalogue(main, catalogueSection);
-    setupLogin(main, loginSection, () => { setUserNav(); setActiveNav('catalogueLink'); showCatalogue(); });
-    setupRegister(main, registerSection, () => { setUserNav(); setActiveNav('catalogueLink'); showCatalogue(); });
-    setupCreate(main, createSection, () => { setActiveNav('catalogueLink'); showCatalogue(); });
+    setupCatalogue(main, catalogueSection, setActiveNav);
+    setupLogin(main, loginSection, setActiveNav);
+    setupRegister(main, registerSection, setActiveNav);
+    setupCreate(main, createSection, setActiveNav);
 
     setupNavigation();
 
@@ -48,7 +48,6 @@ function main() {
                 const view = links[e.target.id];
                 if (typeof view == 'function') {
                     e.preventDefault();
-                    setActiveNav(e.target.id);
                     view();
                 }
             }

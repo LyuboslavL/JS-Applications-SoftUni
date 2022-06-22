@@ -30,12 +30,12 @@ async function onSubmit(data) {
 
 let main;
 let section;
-let onSuccess;
+let setActiveNav;
 
-export function setupRegister(mainTarget, sectionTarget, onSuccessTarget) {
+export function setupRegister(mainTarget, sectionTarget, setActiveNavCb) {
     main = mainTarget;
     section = sectionTarget;
-    onSuccess = onSuccessTarget;
+    setActiveNav = setActiveNavCb;
 
     const form = section.querySelector('form');
 
@@ -47,6 +47,8 @@ export function setupRegister(mainTarget, sectionTarget, onSuccessTarget) {
 }
 
 export function showRegister() {
+    setActiveNav('registerLink');
+
     main.innerHTML = '';
     main.appendChild(section);
 }
