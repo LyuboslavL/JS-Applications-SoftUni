@@ -1,3 +1,5 @@
+import { showCatalogue } from "./catalogue.js";
+
 async function onSubmit(data) {
     if (data.password != data.rePass) {
         return console.error('Passwords don\'t match');
@@ -19,7 +21,7 @@ async function onSubmit(data) {
         const data = await response.json();
         if (response.status == 200) {
             sessionStorage.setItem('authToken', data.accessToken);
-            onSuccess();
+            showCatalogue();
         } else {
             throw new Error(data.message);
         }
