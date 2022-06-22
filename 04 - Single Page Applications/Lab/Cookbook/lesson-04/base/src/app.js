@@ -43,6 +43,8 @@ function main() {
     }
 
     function setupNavigation() {
+        document.getElementById('logoutBtn').addEventListener('click', logout);
+
         nav.addEventListener('click', function (e) {
             if (e.target.tagName == 'A') {
                 const view = links[e.target.id];
@@ -59,7 +61,6 @@ function setUserNav() {
     if (sessionStorage.getItem('authToken') != null) {
         document.getElementById('user').style.display = 'inline-block';
         document.getElementById('guest').style.display = 'none';
-        document.getElementById('logoutBtn').addEventListener('click', logout);
     } else {
         document.getElementById('guest').style.display = 'inline-block';
         document.getElementById('user').style.display = 'none';
