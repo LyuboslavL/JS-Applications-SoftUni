@@ -1,9 +1,5 @@
 import { e } from './dom.js'
 
-let main;
-let section;
-let setActiveNav;
-
 async function getRecipeById(id) {
     const response = await fetch('http://localhost:3030/data/recipes/' + id);
     const recipe = await response.json();
@@ -30,13 +26,18 @@ function createRecipeCard(recipe) {
     return result;
 }
 
+let main;
+let section;
+let setActiveNav;
+
 export function setupDetails(mainTarget, sectionTarget, setActiveNavCb) {
     main = mainTarget;
     section = sectionTarget;
     setActiveNav = setActiveNavCb;
 }
 
-export async function showDetails() {
+export async function showDetails(id) {
+    setActiveNav();
     section.innerHTML = '<p style="color: white">Loading...</p>'
     main.innerHTML = '';
     main.appendChild(section);

@@ -2,6 +2,7 @@ import { setupCatalogue, showCatalogue } from './catalogue.js';
 import { setupLogin, showLogin } from './login.js';
 import { setupRegister, showRegister } from './register.js';
 import { setupCreate, showCreate } from './create.js'
+import { setupDetails } from './details.js';
 
 main();
 
@@ -14,6 +15,7 @@ function main() {
     const loginSection = document.getElementById('loginSection');
     const registerSection = document.getElementById('registerSection');
     const createSection = document.getElementById('createSection');
+    const detailsSection = document.getElementById('detailsSection');
 
     const links = {
         'catalogueLink': showCatalogue,
@@ -26,6 +28,7 @@ function main() {
     setupLogin(main, loginSection, setActiveNav);
     setupRegister(main, registerSection, setActiveNav);
     setupCreate(main, createSection, setActiveNav);
+    setupDetails(main, detailsSection, setActiveNav);
 
     setupNavigation();
 

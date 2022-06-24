@@ -17,6 +17,8 @@ async function onSubmit(data) {
         const data = await response.json();
         if (response.status == 200) {
             sessionStorage.setItem('authToken', data.accessToken);
+            document.getElementById('user').style.display = 'inline-block';
+            document.getElementById('guest').style.display = 'none';
             showCatalogue();
         } else {
             throw new Error(data.message);
@@ -34,7 +36,7 @@ export function setupLogin(mainTarget, sectionTarget, setActiveNavCb) {
     main = mainTarget;
     section = sectionTarget;
     setActiveNav = setActiveNavCb;
-    
+
     const form = section.querySelector('form');
 
     form.addEventListener('submit', (ev => {
