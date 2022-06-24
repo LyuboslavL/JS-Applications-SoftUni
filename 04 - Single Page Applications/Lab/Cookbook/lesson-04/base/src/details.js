@@ -21,9 +21,16 @@ function createRecipeCard(recipe) {
         e('div', { className: 'description' },
             e('h3', {}, 'Preparation:'),
             recipe.steps.map(s => e('p', {}, s)),
-            e('button', {}, 'Edit')
         ),
     );
+
+    const userId = sessionStorage.getItem('userId');
+    if (userId === recipe._ownerId) {
+        result.appendChild(e('div', { className: 'controls' },
+            e('button', { onClick: () => showEdit(recipe._id) }, '\u270E Edit'),
+            e('button', {}, '\u2716 Delete')
+        ))
+    }
 
     return result;
 }

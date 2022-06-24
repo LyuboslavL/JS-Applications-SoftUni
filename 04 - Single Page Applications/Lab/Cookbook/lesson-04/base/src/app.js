@@ -82,7 +82,10 @@ async function logout() {
     });
     if (response.status == 200) {
         sessionStorage.removeItem('authToken');
-        window.location.pathname = 'index.html';
+        sessionStorage.removeItem('userId', data._id);
+        sessionStorage.removeItem('email', data.email);
+
+        showCatalogue();
     } else {
         console.error(await response.json());
     }
