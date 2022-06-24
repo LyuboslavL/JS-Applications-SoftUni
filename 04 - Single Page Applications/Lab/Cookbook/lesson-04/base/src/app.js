@@ -3,6 +3,7 @@ import { setupLogin, showLogin } from './login.js';
 import { setupRegister, showRegister } from './register.js';
 import { setupCreate, showCreate } from './create.js'
 import { setupDetails } from './details.js';
+import { setupEdit } from './edit.js'
 
 main();
 
@@ -16,6 +17,7 @@ function main() {
     const registerSection = document.getElementById('registerSection');
     const createSection = document.getElementById('createSection');
     const detailsSection = document.getElementById('detailsSection');
+    const editSection = document.getElementById('editSection');
 
     const links = {
         'catalogueLink': showCatalogue,
@@ -29,6 +31,7 @@ function main() {
     setupRegister(main, registerSection, setActiveNav);
     setupCreate(main, createSection, setActiveNav);
     setupDetails(main, detailsSection, setActiveNav);
+    setupEdit(main, editSection, setActiveNav);
 
     setupNavigation();
 

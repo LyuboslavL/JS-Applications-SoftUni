@@ -1,4 +1,5 @@
 import { e } from './dom.js'
+import { showEdit } from './edit.js'
 
 async function getRecipeById(id) {
     const response = await fetch('http://localhost:3030/data/recipes/' + id);
@@ -19,7 +20,8 @@ function createRecipeCard(recipe) {
         ),
         e('div', { className: 'description' },
             e('h3', {}, 'Preparation:'),
-            recipe.steps.map(s => e('p', {}, s))
+            recipe.steps.map(s => e('p', {}, s)),
+            e('button', {}, 'Edit')
         ),
     );
 
