@@ -9,6 +9,7 @@ async function getRecipeById(id) {
 
 async function onSubmit(data) {
     const recipeId = data.id;
+
     const body = JSON.stringify({
         name: data.name,
         img: data.img,
@@ -44,6 +45,7 @@ async function onSubmit(data) {
 let main;
 let section;
 let setActiveNav;
+// let recipeId;
 
 export function setupEdit(mainTarget, sectionTarget, setActiveNavCb) {
     main = mainTarget;
@@ -68,7 +70,8 @@ export async function showEdit(id) {
 
     const recipe = await getRecipeById(id);
 
-    section.querySelector('[name="id"]').value = recipe.id;
+    section.querySelector('[name="id"]').value = id;
+    console.log(id, recipe.name, recipe.img, recipe.ingredients, recipe.steps);
     section.querySelector('[name="name"]').value = recipe.name;
     section.querySelector('[name="img"]').value = recipe.img;
     section.querySelector('[name="ingredients"]').value = recipe.ingredients.join('\n');
