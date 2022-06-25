@@ -80,11 +80,15 @@ async function logout() {
             'X-Authorization': sessionStorage.getItem('authToken')
         },
     });
+
+    console.log(sessionStorage);
     if (response.status == 200) {
         sessionStorage.removeItem('authToken');
-        sessionStorage.removeItem('userId', data._id);
-        sessionStorage.removeItem('email', data.email);
+        sessionStorage.removeItem('userId');
+        sessionStorage.removeItem('email');
 
+
+        setUserNav();
         showCatalogue();
     } else {
         console.error(await response.json());

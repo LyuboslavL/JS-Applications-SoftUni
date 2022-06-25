@@ -25,7 +25,7 @@ function createRecipeCard(recipe) {
     );
 
     const userId = sessionStorage.getItem('userId');
-    if (userId === recipe._ownerId) {
+    if (userId == recipe._ownerId) {
         result.appendChild(e('div', { className: 'controls' },
             e('button', { onClick: () => showEdit(recipe._id) }, '\u270E Edit'),
             e('button', {}, '\u2716 Delete')

@@ -32,7 +32,7 @@ async function onSubmit(data) {
         });
 
         if (response.status == 200) {
-            showDetails(recipeId);
+            showDetails(recipeId)
         } else {
             throw new Error(await response.json());
         }
@@ -68,9 +68,9 @@ export async function showEdit(id) {
 
     const recipe = await getRecipeById(id);
 
-    section.querySelector('[name="id"').value = recipe.id;
-    section.querySelector('[name="name"').value = recipe.name;
-    section.querySelector('[name="img"').value = recipe.img;
-    section.querySelector('[name="ingredients"').value = recipe.ingredients.join('\n');
-    section.querySelector('[name="steps"').value = recipe.steps.join('\n');
+    section.querySelector('[name="id"]').value = recipe.id;
+    section.querySelector('[name="name"]').value = recipe.name;
+    section.querySelector('[name="img"]').value = recipe.img;
+    section.querySelector('[name="ingredients"]').value = recipe.ingredients.join('\n');
+    section.querySelector('[name="steps"]').value = recipe.steps.join('\n');
 }

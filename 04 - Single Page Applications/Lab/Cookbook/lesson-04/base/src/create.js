@@ -1,4 +1,3 @@
-import { showCatalogue } from './catalogue.js'
 import { showDetails } from './details.js'
 
 async function onSubmit(data) {
