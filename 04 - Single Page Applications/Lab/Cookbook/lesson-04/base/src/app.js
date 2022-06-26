@@ -81,7 +81,6 @@ async function logout() {
         },
     });
 
-    console.log(sessionStorage);
     if (response.status == 200) {
         sessionStorage.removeItem('authToken');
         sessionStorage.removeItem('userId');

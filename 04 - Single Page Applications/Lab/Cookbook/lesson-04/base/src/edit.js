@@ -71,7 +71,6 @@ export async function showEdit(id) {
     const recipe = await getRecipeById(id);
 
     section.querySelector('[name="id"]').value = id;
-    console.log(id, recipe.name, recipe.img, recipe.ingredients, recipe.steps);
     section.querySelector('[name="name"]').value = recipe.name;
     section.querySelector('[name="img"]').value = recipe.img;
     section.querySelector('[name="ingredients"]').value = recipe.ingredients.join('\n');
