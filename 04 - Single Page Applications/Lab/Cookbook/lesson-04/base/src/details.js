@@ -8,6 +8,34 @@ async function getRecipeById(id) {
     return recipe;
 }
 
+async function deleteRecipeById(id) {
+    const confirmed = confirm('Are you sure you want to delete this recipe?');
+    
+    if (confirmed) {
+        const token = sessionStorage.getItem('authToken');
+        if (token == null) {
+            return alert(`You're not logged in!`);
+        }
+
+        try {
+            const response = await fetch('http://localhost:3030/data/recipes/' + id, {
+                method: 'delete',
+                headers: {
+                    'X-Authorization': token
+                }
+            });
+
+            if (response.status == 200) {
+                section.innerHTML = '<article><h2>Recipe deleted.</h2></article>';
+            } else {
+                throw new Error(await response.json());
+            }
+        } catch (err) {
+            throw new Error(err.message);
+        }
+    }
+}
+
 function createRecipeCard(recipe) {
     const result = e('article', {},
         e('h2', {}, recipe.name),
@@ -28,7 +56,7 @@ function createRecipeCard(recipe) {
     if (userId == recipe._ownerId) {
         result.appendChild(e('div', { className: 'controls' },
             e('button', { onClick: () => showEdit(recipe._id) }, '\u270E Edit'),
-            e('button', {}, '\u2716 Delete')
+            e('button', { onClick: () => deleteRecipeById(recipe._id)}, '\u2716 Delete')
         ))
     }
 
