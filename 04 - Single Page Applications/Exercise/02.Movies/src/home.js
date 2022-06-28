@@ -1,4 +1,5 @@
 import { e } from './dom.js';
+import { showDetails } from './details.js';
 
 async function getMovies() {
     const response = await fetch('http://localhost:3030/data/movies');
@@ -23,7 +24,13 @@ let containter;
 export function setupHome(mainTarget, sectionTarget) {
     main = mainTarget;
     section = sectionTarget;
-    containter = section.querySelector('.card-deck.d-flex.justify-content-center')
+    containter = section.querySelector('.card-deck.d-flex.justify-content-center');
+
+    containter.addEventListener('click', function(e) {
+        if (e.target.classList.contains('movieDetailsLink')) {
+            showDetails(e.target.id);
+        }
+    })
 }
 
 export async function showHome() {
