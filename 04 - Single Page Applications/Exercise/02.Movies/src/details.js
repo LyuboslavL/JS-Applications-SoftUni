@@ -38,11 +38,19 @@ function createMovieCard(movie) {
                             e('p', {}, movie.description),
                             // e('a', { className: 'btn btn-danger' }, 'Delete'),
                             // e('a', { className: 'btn btn-warning' }, 'Edit'),
-                            e('a', { className: 'btn btn-primary', href: '#' }, 'Like'),
+                            e('a', { className: 'btn btn-primary', href: '#', onClick: likeMovie }, 'Like'),
                             e('span', { className: 'enrolled-span' }, 'Liked 1')
                         )));
         }
     }
+
+    async function likeMovie() {
+        const response = await fetch('http://localhost:3030/data/likes', {
+            method: 'post',
+            headers: { 'Content-Type' : 'application/json' },
+            body: JSON.stringify( {movieId: movie._id} )
+        })
+    }   
 
     return element;
 }
