@@ -21,8 +21,8 @@ function createMovieCard(movie) {
                         e('div', { className: 'col-md-4 text-center' },
                             e('h3', { className: 'my-3 ' }, 'Movie Description'),
                             e('p', {}, movie.description),
-                            e('a', { className: 'btn btn-danger' }, 'Delete'),
-                            e('a', { className: 'btn btn-warning' }, 'Edit'),
+                            e('a', { className: 'btn btn-danger', href: '#' }, 'Delete'),
+                            e('a', { className: 'btn btn-warning', href: '#' }, 'Edit'),
                             // e('a', { className: 'btn btn-primary' }, 'Like'),
                             e('span', { className: 'enrolled-span' }, 'Liked 1')
                         )));
@@ -38,7 +38,7 @@ function createMovieCard(movie) {
                             e('p', {}, movie.description),
                             // e('a', { className: 'btn btn-danger' }, 'Delete'),
                             // e('a', { className: 'btn btn-warning' }, 'Edit'),
-                            e('a', { className: 'btn btn-primary' }, 'Like'),
+                            e('a', { className: 'btn btn-primary', href: '#' }, 'Like'),
                             e('span', { className: 'enrolled-span' }, 'Liked 1')
                         )));
         }
