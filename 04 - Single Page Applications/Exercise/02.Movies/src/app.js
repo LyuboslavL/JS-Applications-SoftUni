@@ -38,9 +38,11 @@ function setupNavigation() {
         document.getElementById('welcome-msg').textContent = `Welcome, ${email}`;
         [...document.querySelectorAll('nav .user')].forEach(l => l.style.display = 'block');
         [...document.querySelectorAll('nav .guest')].forEach(l => l.style.display = 'none');
+        document.querySelector('#createLink').style.display = 'inline-block';
     } else {
         [...document.querySelectorAll('nav .user')].forEach(l => l.style.display = 'none');
         [...document.querySelectorAll('nav .guest')].forEach(l => l.style.display = 'block');
+        document.querySelector('#createLink').style.display = 'none';
     }
 
     document.querySelector('nav').addEventListener('click', function (e) {
