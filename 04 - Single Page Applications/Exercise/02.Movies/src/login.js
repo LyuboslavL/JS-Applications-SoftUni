@@ -22,6 +22,7 @@ export function setupLogin(mainTarget, sectionTarget) {
         });
 
         if (response.ok) {
+            e.target.reset();
             const data = await response.json();
             sessionStorage.setItem('authToken', data.accessToken);
             sessionStorage.setItem('userId', data._id);
