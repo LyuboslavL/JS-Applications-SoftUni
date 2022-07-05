@@ -1,12 +1,25 @@
 import { e } from './dom.js';
 
+async function getLikesByMovieId(movieId) {
+    const response = await fetch(`http://localhost:3030/data/likes?where=movieId%3D%22${movieId}%22&distinct=_ownerId&count`);
+    const data = await response.json();
+    return data;
+};
+
+async function getOwnLikesById(id) {
+    const userId = sessionStorage.getItem('userId');
+    const response = await fetch(`http://localhost:3030/data/likes?where=movieId%3D%22${id}%22%20and%20_ownerId%3D%22${userId}%22`);
+    const data = await response.json();
+    return data;
+}
+
 async function getMovieById(movieId) {
     const response = await fetch('http://localhost:3030/data/movies/' + movieId);
     const data = await response.json();
     return data;
 };
 
-function createMovieCard(movie) {
+function createMovieCard(movie, likes, ownLikes) {
     const userId = sessionStorage.getItem('userId');
     let element;
 
@@ -24,7 +37,22 @@ function createMovieCard(movie) {
                             e('a', { className: 'btn btn-danger', href: '#' }, 'Delete'),
                             e('a', { className: 'btn btn-warning', href: '#' }, 'Edit'),
                             // e('a', { className: 'btn btn-primary' }, 'Like'),
-                            e('span', { className: 'enrolled-span' }, 'Liked 1')
+                            e('span', { className: 'enrolled-span' }, likes + ' like' + (likes == 1 ? '' : 's'))
+                        )));
+        } else if (ownLikes.length == 0) {
+            element =
+                e('div', { className: 'container' },
+                    e('div', { className: 'row bg-light text-dark' },
+                        e('h1', {}, `Movie title: ${movie.title}`),
+                        e('div', { className: 'col-md-8' },
+                            e('img', { className: 'img-thumbnail', src: movie.img, alt: 'Movie' })),
+                        e('div', { className: 'col-md-4 text-center' },
+                            e('h3', { className: 'my-3 ' }, 'Movie Description'),
+                            e('p', {}, movie.description),
+                            // e('a', { className: 'btn btn-danger' }, 'Delete'),
+                            // e('a', { className: 'btn btn-warning' }, 'Edit'),
+                            e('a', { className: 'btn btn-primary', href: '#', onClick: likeMovie }, 'Like'),
+                            e('span', { className: 'enrolled-span' }, likes + ' like' + (likes == 1 ? '' : 's'))
                         )));
         } else {
             element =
@@ -38,19 +66,42 @@ function createMovieCard(movie) {
                             e('p', {}, movie.description),
                             // e('a', { className: 'btn btn-danger' }, 'Delete'),
                             // e('a', { className: 'btn btn-warning' }, 'Edit'),
-                            e('a', { className: 'btn btn-primary', href: '#', onClick: likeMovie }, 'Like'),
-                            e('span', { className: 'enrolled-span' }, 'Liked 1')
+                            // e('a', { className: 'btn btn-primary', href: '#', onClick: likeMovie }, 'Like'),
+                            e('span', { className: 'enrolled-span' }, likes + ' like' + (likes == 1 ? '' : 's'))
                         )));
         }
+    } else {
+        element =
+                e('div', { className: 'container' },
+                    e('div', { className: 'row bg-light text-dark' },
+                        e('h1', {}, `Movie title: ${movie.title}`),
+                        e('div', { className: 'col-md-8' },
+                            e('img', { className: 'img-thumbnail', src: movie.img, alt: 'Movie' })),
+                        e('div', { className: 'col-md-4 text-center' },
+                            e('h3', { className: 'my-3 ' }, 'Movie Description'),
+                            e('p', {}, movie.description),
+                            // e('a', { className: 'btn btn-danger' }, 'Delete'),
+                            // e('a', { className: 'btn btn-warning' }, 'Edit'),
+                            // e('a', { className: 'btn btn-primary', href: '#', onClick: likeMovie }, 'Like'),
+                            e('span', { className: 'enrolled-span' }, likes + ' like' + (likes == 1 ? '' : 's'))
+                        )));
     }
 
-    async function likeMovie() {
+    async function likeMovie(event) {
         const response = await fetch('http://localhost:3030/data/likes', {
             method: 'post',
-            headers: { 'Content-Type' : 'application/json' },
-            body: JSON.stringify( {movieId: movie._id} )
-        })
-    }   
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Authorization': sessionStorage.getItem('authToken')
+            },
+            body: JSON.stringify({ movieId: movie._id })
+        });
+
+        if (response.ok) {
+            event.target.remove();
+            likes++;
+        }
+    }
 
     return element;
 }
@@ -68,7 +119,10 @@ export async function showDetails(id) {
     main.innerHTML = '';
     main.appendChild(section);
 
-    const movie = await getMovieById(id);
-    const card = createMovieCard(movie);
+    const [movie, likes, ownLikes] = await Promise.all([
+        getMovieById(id),
+        getLikesByMovieId(id),
+        getOwnLikesById(id)]);
+    const card = createMovieCard(movie, likes, ownLikes);
     section.appendChild(card);
 }

@@ -54,5 +54,28 @@ function setupNavigation() {
     document.getElementById('createLink').addEventListener('click', function (e) {
         e.preventDefault();
         showCreate();
-    })
+    });
+
+    document.getElementById('logoutBtn').addEventListener('click', logout);
+}
+
+async function logout() {
+    const response = await fetch('http://localhost:3030/users/logout', {
+        method: 'get',
+        headers: {
+            'X-Authorization': sessionStorage.getItem('authToken')
+        },
+    });
+
+    if (response.status == 200) {
+        sessionStorage.removeItem('authToken');
+        sessionStorage.removeItem('userId');
+        sessionStorage.removeItem('email');
+
+
+        setupNavigation();
+        showLogin();
+    } else {
+        console.error(await response.json());
+    }
 }
