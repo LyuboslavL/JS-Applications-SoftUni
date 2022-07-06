@@ -1,5 +1,6 @@
 import { e } from './dom.js';
 import { showHome } from './home.js';
+import { showEdit } from './edit.js';
 
 async function getLikesByMovieId(movieId) {
     const response = await fetch(`http://localhost:3030/data/likes?where=movieId%3D%22${movieId}%22&distinct=_ownerId&count`);
@@ -12,9 +13,9 @@ async function getOwnLikesById(id) {
     const response = await fetch(`http://localhost:3030/data/likes?where=movieId%3D%22${id}%22%20and%20_ownerId%3D%22${userId}%22`);
     const data = await response.json();
     return data;
-}
+};
 
-async function getMovieById(movieId) {
+export async function getMovieById(movieId) {
     const response = await fetch('http://localhost:3030/data/movies/' + movieId);
     const data = await response.json();
     return data;
@@ -38,7 +39,7 @@ async function onDelete(e, movieId) {
             return alert(error.message);
         }
     }
-}
+};
 
 function createMovieCard(movie, likes, ownLikes) {
     const userId = sessionStorage.getItem('userId');
@@ -56,7 +57,7 @@ function createMovieCard(movie, likes, ownLikes) {
                             e('h3', { className: 'my-3 ' }, 'Movie Description'),
                             e('p', {}, movie.description),
                             e('a', { className: 'btn btn-danger', href: '#', onClick: (e) => onDelete(e, movie._id) }, 'Delete'),
-                            e('a', { className: 'btn btn-warning', href: '#' }, 'Edit'),
+                            e('a', { className: 'btn btn-warning', href: '#', onClick: () => showEdit(movie._id) }, 'Edit'),
                             // e('a', { className: 'btn btn-primary' }, 'Like'),
                             e('span', { className: 'enrolled-span' }, likes + ' like' + (likes == 1 ? '' : 's'))
                         )));

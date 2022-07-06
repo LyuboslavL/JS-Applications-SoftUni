@@ -31,6 +31,7 @@ export function setupLogin(mainTarget, sectionTarget) {
             document.getElementById('welcome-msg').textContent = `Welcome, ${email}`;
             [...document.querySelectorAll('nav .user')].forEach(l => l.style.display = 'block');
             [...document.querySelectorAll('nav .guest')].forEach(l => l.style.display = 'none');
+            
             showHome();
             document.getElementById('createLink').style.display = 'inline-block';
         } else {
