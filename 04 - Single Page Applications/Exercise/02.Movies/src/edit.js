@@ -5,7 +5,7 @@ let section;
 
 async function onSubmit(data) {
     const movieId = data.id;
-    console.log(movieId);
+    console.log(data);
 
     const body = JSON.stringify({
         title: data.title,
